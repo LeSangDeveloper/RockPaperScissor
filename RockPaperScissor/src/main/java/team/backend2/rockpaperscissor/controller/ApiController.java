@@ -41,46 +41,52 @@ public class ApiController {
     	String result = WaitingPool.getInstance().findRoom(uid);
     	if (result.startsWith("-"))
     	{
-    		response.addCookie(new Cookie("roomId", uid));
+    		Room room = WaitingPool.getInstance().findById(result.substring(1,result.length()));
+    		if (room.getGameId() == null)
+    		{
+    			room.setGameId((GamePool.getInstance().newGame(result, room.getUid_2()).getId()));
+    		}
+    		response.addCookie(new Cookie("gameId", room.getGameId()));
     		return "Play";
     	}
     	else if (result.equals(uid))
     	{
-    		response.addCookie(new Cookie("roomId", uid));
+    		//response.addCookie(new Cookie("roomId", uid));
     		return "Waiting";
     	}
     	else 
     	{
-    		response.addCookie(new Cookie("roomId", result));
+    		//response.addCookie(new Cookie("roomId", result));
     		return result;
     	}
     }
     
-    @RequestMapping(value = "/waiting", method = RequestMethod.GET)
-    public String GetWaiting(HttpServletRequest request)
-    {
-    	String uid = WebUtils.getCookie(request, "playerId").getValue();
-    	String result = WaitingPool.getInstance().findById(uid).getUid_2();
-    	if (result == null)
-    	{
-    		return "Waiting";
-    	}
-    	else
-    		return "Matched";
-    }
+//    @RequestMapping(value = "/waiting", method = RequestMethod.GET)
+//    public String GetWaiting(HttpServletRequest request)
+//    {
+//    	String uid = WebUtils.getCookie(request, "playerId").getValue();
+//    	String result = WaitingPool.getInstance().findById(uid).getUid_2();
+//    	if (result == null)
+//    	{
+//    		return "Waiting";
+//    	}
+//    	else
+//    		return "Matched";
+//    }
     
-    // Hàm này sau khi chủ phòng đã có người vô phòng, và ng chơi khách vô phòng gọi
-    @RequestMapping(value = "/match", method = RequestMethod.POST)
-    public String GetMatch(HttpServletRequest request, HttpServletResponse response)
-    {
-    	String roomId = WebUtils.getCookie(request, "playerId").getValue();
-    	Room room = WaitingPool.getInstance().findById(roomId);
-    	if (room.getGameId() == null)
-    	{
-    		room.setGameId((GamePool.getInstance().newGame(roomId, room.getUid_2()).getId()));
-    	}
-    	response.addCookie(new Cookie("gameId", room.getGameId()));
-    	return room.getGameId();
-    }
+//    // Hàm này sau khi chủ phòng đã có người vô phòng, và ng chơi khách vô phòng gọi
+//    @RequestMapping(value = "/match", method = RequestMethod.GET)
+//    public String GetMatch(HttpServletRequest request, HttpServletResponse response)
+//    {
+//    	String uid = WebUtils.getCookie(request, "playerId").getValue();
+//		//String room_id = WaitingPool.getInstance().findRoom(uid);
+//    	Room room = WaitingPool.getInstance().findById(uid);
+//    	if (room.getGameId() == null)
+//    	{
+//    		room.setGameId((GamePool.getInstance().newGame(uid, room.getUid_2()).getId()));
+//    	}
+//    	response.addCookie(new Cookie("gameId", room.getGameId()));
+//    	return room.getGameId();
+//    }
 
 }
