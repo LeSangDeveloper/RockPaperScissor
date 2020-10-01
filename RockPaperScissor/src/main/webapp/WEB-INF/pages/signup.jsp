@@ -76,7 +76,7 @@ a {
     <hr>
 
     <label for="name"><b>Name</b></label>
-    <input type="text" placeholder="Enter your name" name="name" id="username" required>
+    <input type="text" placeholder="Enter your name" name="name" id="userName" required>
     <hr>
     <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 
@@ -87,6 +87,6 @@ a {
     <p>Already have an account? <a href="#">Sign in</a>.</p>
   </div>
 </form>
-<script src="${pageContext.request.contextPath}/js/signup.js"></script>
+
 </body>
 </html>
