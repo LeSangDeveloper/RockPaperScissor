@@ -26,19 +26,11 @@ public class GamePlayController {
 //  @RequestMapping(method = RequestMethod.POST)
     @PostMapping("/turn")
         public String handle(HttpServletRequest request) {
-            //System.out.println("AAAAAAAAAAAAAAAAAAAAA");
             //Cookie player = WebUtils.getCookie(request, "player");
             //Cookie room_id = WebUtils.getCookie(request, "room_id");
-            //String player = payload.get("uid").toString();
             String player = request.getParameter("uid");
             String room_id = request.getParameter("room_id");
             Integer choose = Integer.parseInt(request.getParameter("choose"));
-            //String player = "1234";
-            //String room_id = payload.get("room_id").toString();
-            //String room_id = "12345";
-            //Integer choose = Integer.parseInt(request.getParameter("choose"));
-            //Integer choose = Integer.parseInt(payload.get("choose").toString());
-            //Integer choose = 1;
             if (player == null)
                 return "signup";
 

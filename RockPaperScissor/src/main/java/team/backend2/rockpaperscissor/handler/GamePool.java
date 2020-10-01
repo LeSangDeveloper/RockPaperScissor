@@ -21,4 +21,9 @@ public class GamePool {
     public Game findById(String gameId){
         return pool.get(gameId);
     }
+    public Game newGame(String uid1, String uid2){
+        Game newGame = new Game(uid1,uid2);
+        pool.put(newGame.getId(),newGame);
+        return newGame;
+    }
 }
