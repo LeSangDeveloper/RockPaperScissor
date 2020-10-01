@@ -174,7 +174,7 @@ var gameModule = (function () {
         overallResultText = overallTieText;
         overallResultClass = "tie";
       }
-      Computer;
+
 
       $(".end-result").html(overallResultText);
       $(".end-screen").attr("class", "end-screen " + overallResultClass);
