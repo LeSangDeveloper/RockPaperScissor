@@ -2,6 +2,8 @@ package team.backend2.rockpaperscissor.controller;
 
 import java.util.ArrayList;
 import java.lang.System;
+
+import javax.annotation.Nullable;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.WebUtils;
 
 @Controller
 @RequestMapping("/")
@@ -21,9 +24,9 @@ public class ApplicationController {
 	ArrayList<String> Players;
 	
     @RequestMapping(method = RequestMethod.GET)
-    public String hello(@CookieValue("player") String player,Model model) {
+    public String hello(HttpServletRequest request,Model model) {
         
-        model.addAttribute("greeting", "Hello Spring MVC");
+        Cookie player = WebUtils.getCookie(request, "player");
         
         if (player == null)
         	return "signup";
@@ -38,10 +41,9 @@ public class ApplicationController {
     }
     
     @RequestMapping(value = "/signup"  ,method = RequestMethod.POST)
-    public String PostSignUp(String userName, HttpServletResponse response)
+    public String PostSignUp(String name, HttpServletResponse response)
     {
-    	System.out.print("test");
-    	response.addCookie(new Cookie("player", userName));
+    	response.addCookie(new Cookie("player", name));
     	return "index";
     }
     
