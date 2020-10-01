@@ -18,6 +18,7 @@ public class GamePool {
         }
         return instance;
     }
+    public Map<String, Game> getPool(){return pool;}
     public Game findById(String gameId){
         return pool.get(gameId);
     }

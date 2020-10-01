@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,52 +38,23 @@ public class ApiController {
     	String result = WaitingPool.getInstance().findRoom(uid);
     	if (result.startsWith("-"))
     	{
-    		Room room = WaitingPool.getInstance().findById(result.substring(1,result.length()));
+    		String room_id = result.substring(1,result.length());
+    		Room room = WaitingPool.getInstance().findById(room_id);
     		if (room.getGameId() == null)
     		{
-    			room.setGameId((GamePool.getInstance().newGame(result, room.getUid_2()).getId()));
+    			Game newGame = GamePool.getInstance().newGame(room_id, room.getUid_2());
+    			room.setGameId(newGame.getId());
     		}
     		response.addCookie(new Cookie("gameId", room.getGameId()));
     		return "Play";
     	}
     	else if (result.equals(uid))
     	{
-    		//response.addCookie(new Cookie("roomId", uid));
     		return "Waiting";
     	}
     	else 
     	{
-    		//response.addCookie(new Cookie("roomId", result));
     		return result;
     	}
     }
-    
-//    @RequestMapping(value = "/waiting", method = RequestMethod.GET)
-//    public String GetWaiting(HttpServletRequest request)
-//    {
-//    	String uid = WebUtils.getCookie(request, "playerId").getValue();
-//    	String result = WaitingPool.getInstance().findById(uid).getUid_2();
-//    	if (result == null)
-//    	{
-//    		return "Waiting";
-//    	}
-//    	else
-//    		return "Matched";
-//    }
-    
-//    // Hàm này sau khi chủ phòng đã có người vô phòng, và ng chơi khách vô phòng gọi
-//    @RequestMapping(value = "/match", method = RequestMethod.GET)
-//    public String GetMatch(HttpServletRequest request, HttpServletResponse response)
-//    {
-//    	String uid = WebUtils.getCookie(request, "playerId").getValue();
-//		//String room_id = WaitingPool.getInstance().findRoom(uid);
-//    	Room room = WaitingPool.getInstance().findById(uid);
-//    	if (room.getGameId() == null)
-//    	{
-//    		room.setGameId((GamePool.getInstance().newGame(uid, room.getUid_2()).getId()));
-//    	}
-//    	response.addCookie(new Cookie("gameId", room.getGameId()));
-//    	return room.getGameId();
-//    }
-
 }

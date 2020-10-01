@@ -26,6 +26,10 @@ public class Game {
         this.balanceScore = 0;
         this.roundOrder = 0;
         this.rounds = new ArrayList<>();
+
+        this.rounds.add(new Round());
+        this.rounds.add(new Round());
+        this.rounds.add(new Round());
     }
 
     public Game() {}
@@ -41,6 +45,7 @@ public class Game {
 
     public boolean isfinish(){
         if(roundOrder >= 2) {
+            System.out.println("Finish");
             if (balanceScore > 0) winner = uid_2;
             else if (balanceScore < 0) winner = uid_1;
 
@@ -51,10 +56,12 @@ public class Game {
     public void update(String uid, Integer choose){
         if(roundOrder >= 2) return;
         Round curRound = rounds.get(roundOrder);
-        if(uid.equals(uid_1) && curRound.getPick_1() == null)
+        if(uid.equals(uid_1) && curRound.getPick_1() == null) {
             curRound.setPick_1(choose);
-        if(uid.equals(uid_2) && curRound.getPick_2() == null)
+        }
+        if(uid.equals(uid_2) && curRound.getPick_2() == null) {
             curRound.setPick_2(choose);
+        }
         if(curRound.isfinish()) {
             roundOrder++;
             balanceScore += curRound.getWinner();
