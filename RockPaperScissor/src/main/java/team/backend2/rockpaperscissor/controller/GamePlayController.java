@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
 import team.backend2.rockpaperscissor.handler.GamePool;
 import team.backend2.rockpaperscissor.model.Game;
+import team.backend2.rockpaperscissor.model.GameTurn;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -14,20 +15,22 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
-//@RequestMapping("/turn")
+@RequestMapping("/api")
 public class GamePlayController {
 //        @RequestMapping(method = RequestMethod.POST)
-    @PostMapping("/turn")
-        public String handle(HttpServletRequest request, @RequestBody Map<String, Object> payload) {
-            //System.out.println("AAAAAAAAAAAAAAAAAAAAA");
+        @RequestMapping(value ="/turn", method = RequestMethod.POST)
+        public String handle(HttpServletRequest request) {
             //Cookie player = WebUtils.getCookie(request, "player");
             //Cookie room_id = WebUtils.getCookie(request, "room_id");
-            String player = payload.get("uid").toString();
+            //String player = payload.get("uid").toString();
+            String player = request.getParameter("uid");
+            String room_id = request.getParameter("room_id");
+            Integer choose = Integer.parseInt(request.getParameter("choose"));
             //String player = "1234";
-            String room_id = payload.get("room_id").toString();
+            //String room_id = payload.get("room_id").toString();
             //String room_id = "12345";
             //Integer choose = Integer.parseInt(request.getParameter("choose"));
-            Integer choose = Integer.parseInt(payload.get("choose").toString());
+            //Integer choose = Integer.parseInt(payload.get("choose").toString());
             //Integer choose = 1;
             if (player == null)
                 return "signup";
