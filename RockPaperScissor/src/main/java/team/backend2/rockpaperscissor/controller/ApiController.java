@@ -45,7 +45,9 @@ public class ApiController {
     			Game newGame = GamePool.getInstance().newGame(room_id, room.getUid_2());
     			room.setGameId(newGame.getId());
     		}
-    		response.addCookie(new Cookie("gameId", room.getGameId()));
+    		Cookie cookie = new Cookie("gameId", room.getGameId());
+    		cookie.setPath("/");
+    		response.addCookie(cookie);
     		return "Play";
     	}
     	else if (result.equals(uid))
