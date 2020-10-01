@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 import java.util.UUID;
-
+import team.backend2.rockpaperscissor.handler.*;
 @RestController
 @RequestMapping("/api")
 public class ApiController {
@@ -36,29 +36,7 @@ public class ApiController {
     public String GetFind(HttpServletRequest request)
     {
     	
-    	Cookie player = WebUtils.getCookie(request, "playerId");
-    	
-    	// Nếu khoong có phòng nào
-    	if (Rooms.isEmpty())
-    	{
-    		Rooms.put(player.getValue(), "inactive");
-    		return "new";
-    	}
-    	else
-    	{
-    		// Duyệt từng phòng
-    		for (String roomId : Rooms.keySet())
-    		{
-    			// Nếu phòng chưa chơi
-    			if (Rooms.get(roomId) == "inactive" && roomId != player.getValue())
-    			{
-    				Rooms.replace(roomId, "active");
-    				return roomId;
-    			}
-    		}
-    		Rooms.put(player.getValue(), "inactive");
-    	}
-    	return "new";
+    	return WaitingPool.getInstance().findRoom(WebUtils.getCookie(request, "playerId").getValue());
     }
     
     // Trong lúc chủ phòng chờ sẽ liên tục gọi api này
