@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
 import team.backend2.rockpaperscissor.handler.GamePool;
 import team.backend2.rockpaperscissor.model.Game;
-import team.backend2.rockpaperscissor.model.GameTurn;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

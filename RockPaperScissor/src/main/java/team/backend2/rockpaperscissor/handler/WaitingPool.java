@@ -33,7 +33,7 @@ public class WaitingPool {
             if (pool.get(roomId) == null && !roomId.equals(uid)) {
                 System.out.println("find another room");
                 updateRoom(roomId,uid);
-                return roomId;
+                return "-"+roomId;
             }
         }
         //Náº¿u khÃ´ng cÃ²n room nÃ o thÃ¬ sáº½ tá»± táº¡o room
