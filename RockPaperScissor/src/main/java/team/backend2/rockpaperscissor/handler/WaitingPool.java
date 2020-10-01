@@ -21,16 +21,17 @@ public class WaitingPool {
             return "-"+uid;
         }
         for (String roomId : pool.keySet()) {
-            // Nếu phòng chưa chơi và room đó của người khác
+            // Náº¿u phÃ²ng chÆ°a chÆ¡i vÃ  room Ä‘Ã³ cá»§a ngÆ°á»�i khÃ¡c
             if (pool.get(roomId) == null && roomId != uid) {
                 return roomId;
             }
         }
-        //Nếu không còn room nào thì sẽ tự tạo room
+        //Náº¿u khÃ´ng cÃ²n room nÃ o thÃ¬ sáº½ tá»± táº¡o room
         if(!pool.containsKey(uid))
             newRoom(uid);
         return uid;
     }
+    
     public Room findById(String uid1){
         return pool.get(uid1);
     }
