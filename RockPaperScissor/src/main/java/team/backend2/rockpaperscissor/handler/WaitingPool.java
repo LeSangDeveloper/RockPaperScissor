@@ -17,20 +17,31 @@ public class WaitingPool {
         return instance;
     }
     public String findRoom(String uid){
+        System.out.println(pool);
         if(pool.get(uid) != null){
+            System.out.println("exists");
             return "-"+uid;
         }
         for (String roomId : pool.keySet()) {
+            Room room = pool.get(roomId);
+            if(room != null && room.getUid_2().equals(uid)) {
+                System.out.println("In game");
+                return "-" + roomId;
+            }
+
             // Nếu phòng chưa chơi và room đó của người khác
-            if (pool.get(roomId) == null && roomId != uid) {
+            if (pool.get(roomId) == null && !roomId.equals(uid)) {
+                System.out.println("find another room");
+                updateRoom(roomId,uid);
                 return roomId;
             }
         }
-        //Nếu không còn room nào thì sẽ tự tạo room
+        //Náº¿u khÃ´ng cÃ²n room nÃ o thÃ¬ sáº½ tá»± táº¡o room
         if(!pool.containsKey(uid))
             newRoom(uid);
         return uid;
     }
+    
     public Room findById(String uid1){
         return pool.get(uid1);
     }
