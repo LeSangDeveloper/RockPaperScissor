@@ -24,7 +24,7 @@ import java.util.UUID;
 @RequestMapping("/api")
 public class ApiController {
 	
-	HashMap<String, > Rooms = new HashMap<String, String>();
+	HashMap<String, String> Rooms = new HashMap<String, String>();
 	
 	@RequestMapping(value ="/test" ,method = RequestMethod.GET)
     public String test(HttpServletRequest request,Model model) {
