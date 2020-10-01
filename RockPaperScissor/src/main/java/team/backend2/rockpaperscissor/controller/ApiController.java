@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 import java.util.UUID;
 import team.backend2.rockpaperscissor.handler.*;
+import team.backend2.rockpaperscissor.model.*;
+
 @RestController
 @RequestMapping("/api")
 public class ApiController {
@@ -33,34 +35,52 @@ public class ApiController {
     }
 	
     @RequestMapping(value = "/find", method = RequestMethod.GET)
-    public String GetFind(HttpServletRequest request)
+    public String GetFind(HttpServletRequest request, HttpServletResponse response)
     {
     	String uid = WebUtils.getCookie(request, "playerId").getValue();
     	String result = WaitingPool.getInstance().findRoom(uid);
     	if (result.startsWith("-"))
     	{
+    		response.addCookie(new Cookie("roomId", uid));
     		return "Play";
     	}
     	else if (result.equals(uid))
     	{
+    		response.addCookie(new Cookie("roomId", uid));
     		return "Waiting";
     	}
-    	else return result;
+    	else 
+    	{
+    		response.addCookie(new Cookie("roomId", result));
+    		return result;
+    	}
     }
     
     @RequestMapping(value = "/waiting", method = RequestMethod.GET)
     public String GetWaiting(HttpServletRequest request)
     {
-
-    	return null;
+    	String uid = WebUtils.getCookie(request, "playerId").getValue();
+    	String result = WaitingPool.getInstance().findById(uid).getUid_2();
+    	if (result == null)
+    	{
+    		return "Waiting";
+    	}
+    	else
+    		return "Matched";
     }
     
     // Hàm này sau khi chủ phòng đã có người vô phòng, và ng chơi khách vô phòng gọi
     @RequestMapping(value = "/match", method = RequestMethod.POST)
-    public String GetMatch(HttpServletRequest request)
+    public String GetMatch(HttpServletRequest request, HttpServletResponse response)
     {
-    	
-    	return null;
+    	String roomId = WebUtils.getCookie(request, "playerId").getValue();
+    	Room room = WaitingPool.getInstance().findById(roomId);
+    	if (room.getGameId() == null)
+    	{
+    		room.setGameId(UUID.randomUUID().toString());
+    	}
+    	response.addCookie(new Cookie("gameId", room.getGameId()));
+    	return room.getGameId();
     }
 
 }
