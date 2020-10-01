@@ -4,7 +4,7 @@ var signupModule=(function(){
         name = $("#userName").val();
         name= name.trim()
         if( name ){
-            $.post('/signuppost', {userName: name}, function (data, status){
+            $.post('/signup', {userName: name}, function (data, status){
 
             })
         }
