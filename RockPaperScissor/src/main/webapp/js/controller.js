@@ -8,10 +8,12 @@ var gameModule = (function () {
       playerScore = 0,
       competitorScore = 0,
       bestOf = 3,
+      roomId = null,
       overallResultClass,
       overallResultText,
       character,
       choices = ["rock", "paper", "scissors"];
+    $(".loader").hide();
 
     // Text Variables
     var playerWinsText = "You win the round!",
@@ -58,6 +60,20 @@ var gameModule = (function () {
 
       // Set the values on the screen
       setValues(playerChoice, competitorChoice, winner);
+    }
+
+    function requestMatch(div) {
+      $(".loader").show();
+      var intervalId = setInterval(function () {
+        $.get("/RockPaperScissor/find", {}, function (data, status) {
+          if (data.roomId) {
+            roomId = data.roomId;
+            clearInterval(intervalId);
+            $(".loader").hide();
+            nextScreen(div);
+          }
+        });
+      }, 2000);
     }
 
     // Sets all the values on the board
@@ -175,7 +191,6 @@ var gameModule = (function () {
         overallResultClass = "tie";
       }
 
-
       $(".end-result").html(overallResultText);
       $(".end-screen").attr("class", "end-screen " + overallResultClass);
     }
@@ -204,7 +219,8 @@ var gameModule = (function () {
     $(".start").on("click", function (e) {
       e.preventDefault();
       setBestOf();
-      nextScreen($(this));
+      requestMatch($(this));
+      // nextScreen($(this));
     });
 
     // Set what character is chosen and start the game
