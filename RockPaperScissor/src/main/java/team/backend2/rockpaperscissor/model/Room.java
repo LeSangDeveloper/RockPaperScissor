@@ -10,44 +10,25 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Table(name = "rooms")
 public class Room {
-
-    private String id;
-    private String uid_1;
     private String uid_2;
-    private String winner;
+    private String gameId;
     private LocalDateTime start_time;
     private String time_out;
 
-    public Room() {
+    private Room() {
     }
 
-    public Room(String uid_1, String uid_2) {
-        this.id = UUID.randomUUID().toString();
-        this.uid_1 = uid_1;
+    public Room(String uid_2) {
         this.uid_2 = uid_2;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public String getId() {
-        return id;
+    public String getGameId() {
+        return gameId;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 
-    @Column(name = "uid_1", nullable = false)
-    public String getUid_1() {
-        return uid_1;
-    }
-    public void setUid_1(String uid_1) {
-        this.uid_1 = uid_1;
-    }
-
-    @Column(name = "uid_2", nullable = false)
     public String getUid_2() {
         return uid_2;
     }
@@ -55,25 +36,11 @@ public class Room {
         this.uid_2 = uid_2;
     }
 
-    @Column(name = "winner", nullable = true)
-    public String getWinner() {
-        return winner;
-    }
-    public void setWinner(String winner) {
-        this.winner = winner;
-    }
-
-    @Column(name = "start_time", nullable = false)
     public LocalDateTime getStart_time() {
         return start_time;
     }
     public void setStart_time(LocalDateTime uid_2) {
         this.start_time = start_time;
     }
-//    @Override
-//    public String toString() {
-//        return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId
-//                + "]";
-//    }
 
 }
