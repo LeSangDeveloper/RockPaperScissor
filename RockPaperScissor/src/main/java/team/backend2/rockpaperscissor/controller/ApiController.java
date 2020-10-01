@@ -45,10 +45,14 @@ public class ApiController {
     	{
     		return "Waiting";
     	}
-    	else 
-    	{
-    		return "new";
-    	}
+    	else return result;
+    }
+    
+    @RequestMapping(value = "/waiting", method = RequestMethod.GET)
+    public String GetWaiting(HttpServletRequest request)
+    {
+
+    	return null;
     }
     
     // Hàm này sau khi chủ phòng đã có người vô phòng, và ng chơi khách vô phòng gọi

@@ -29,11 +29,12 @@ public class WaitingPool {
                 return roomId;
             }
         }
-        //Nếu không còn room nào thì sẽ tự tạo room
+        //Náº¿u khÃ´ng cÃ²n room nÃ o thÃ¬ sáº½ tá»± táº¡o room
         if(!pool.containsKey(uid))
             newRoom(uid);
         return uid;
     }
+    
     public Room findById(String uid1){
         return pool.get(uid1);
     }
