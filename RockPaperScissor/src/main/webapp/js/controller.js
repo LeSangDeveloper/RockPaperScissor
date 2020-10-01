@@ -67,6 +67,7 @@ var gameModule = (function () {
       var intervalId = setInterval(function () {
         $.get("/RockPaperScissor/api/find", function (data, status) {
           if (data && data === "Play") {
+            console.log(data);
             $(".loader").hide();
             clearInterval(intervalId);
             nextScreen(div);
