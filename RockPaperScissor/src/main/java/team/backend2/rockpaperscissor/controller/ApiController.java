@@ -33,7 +33,7 @@ public class ApiController {
     }
 	
     @RequestMapping(value = "/find", method = RequestMethod.GET)
-    public String find(HttpServletRequest request)
+    public String GetFind(HttpServletRequest request)
     {
     	
     	Cookie player = WebUtils.getCookie(request, "playerId");
@@ -61,8 +61,14 @@ public class ApiController {
     	return null;
     }
     
+    @RequestMapping(value = "/waiting", method = RequestMethod.GET)
+    public String GetWaiting()
+    {
+    	return null;
+    }
+    
     @RequestMapping(value = "/match", method = RequestMethod.POST)
-    public String match(HttpServletRequest request)
+    public String GetMatch(HttpServletRequest request)
     {
     	
     	return null;
