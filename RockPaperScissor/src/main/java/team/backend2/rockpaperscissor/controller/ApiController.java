@@ -77,7 +77,7 @@ public class ApiController {
     	Room room = WaitingPool.getInstance().findById(roomId);
     	if (room.getGameId() == null)
     	{
-    		room.setGameId(UUID.randomUUID().toString());
+    		room.setGameId((GamePool.getInstance().newGame(roomId, room.getUid_2()).getId()));
     	}
     	response.addCookie(new Cookie("gameId", room.getGameId()));
     	return room.getGameId();
