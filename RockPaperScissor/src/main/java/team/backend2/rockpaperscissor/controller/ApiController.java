@@ -42,7 +42,7 @@ public class ApiController {
     	if (Rooms.isEmpty())
     	{
     		Rooms.put(player.getValue(), "inactive");
-    		return null;
+    		return "new";
     	}
     	else
     	{
@@ -50,7 +50,7 @@ public class ApiController {
     		for (String roomId : Rooms.keySet())
     		{
     			// Nếu phòng chưa chơi
-    			if (Rooms.get(roomId) == "inactive")
+    			if (Rooms.get(roomId) == "inactive" && roomId != player.getValue())
     			{
     				Rooms.replace(roomId, "active");
     				return roomId;
@@ -58,13 +58,21 @@ public class ApiController {
     		}
     		Rooms.put(player.getValue(), "inactive");
     	}
-    	return null;
+    	return "new";
     }
     
     @RequestMapping(value = "/waiting", method = RequestMethod.GET)
-    public String GetWaiting()
+    public String GetWaiting(HttpServletRequest request)
     {
-    	return null;
+    	
+    	Cookie player = WebUtils.getCookie(request, "playerId");
+    	
+    	if(Rooms.get(player.getValue()) == "inactive")
+    	{
+    		return "none";
+    	}
+    	
+    	return "matched";
     }
     
     @RequestMapping(value = "/match", method = RequestMethod.POST)
