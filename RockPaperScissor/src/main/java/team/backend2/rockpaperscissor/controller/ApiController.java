@@ -61,20 +61,22 @@ public class ApiController {
     	return "new";
     }
     
+    // Trong lúc chủ phòng chờ sẽ liên tục gọi api này
     @RequestMapping(value = "/waiting", method = RequestMethod.GET)
     public String GetWaiting(HttpServletRequest request)
     {
     	
     	Cookie player = WebUtils.getCookie(request, "playerId");
-    	
+    	// Nếu vẫn chưa có ng vô phòng trả về "none"
     	if(Rooms.get(player.getValue()) == "inactive")
     	{
     		return "none";
     	}
-    	
+    	//Nếu đã có người vô phòng trả về match
     	return "matched";
     }
     
+    // Hàm này sau khi chủ phòng đã có người vô phòng, và ng chơi khách vô phòng gọi
     @RequestMapping(value = "/match", method = RequestMethod.POST)
     public String GetMatch(HttpServletRequest request)
     {
