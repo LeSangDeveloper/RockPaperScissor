@@ -17,6 +17,9 @@ public class WaitingPool {
         return instance;
     }
     public String findRoom(String uid){
+        if(pool.get(uid) != null){
+            return "-"+uid;
+        }
         for (String roomId : pool.keySet()) {
             // Nếu phòng chưa chơi và room đó của người khác
             if (pool.get(roomId) == null && roomId != uid) {
