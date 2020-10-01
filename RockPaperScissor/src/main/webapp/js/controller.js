@@ -64,35 +64,37 @@ var gameModule = (function () {
 
     function requestMatch(div) {
       $(".loader").show();
-
-      $.get("/RockPaperScissor/api/find", function (data, status) {
-        if (data && data === "Play") {
-          $(".loader").hide();
-          nextScreen(div);
-        } else if (data && data === "Waiting") {
-          waitingApi(div);
-        }
-      });
-    }
-
-    function waitingApi(div) {
       var intervalId = setInterval(function () {
-        $.get("/RockPaperScissor/api/waiting", function (data, status) {
-          if (data && data === "Matched") {
+        $.get("/RockPaperScissor/api/find", function (data, status) {
+          if (data && data === "Play") {
+            $(".loader").hide();
             clearInterval(intervalId);
-            matchApi(div);
+            nextScreen(div);
+          } else if (data && data === "Waiting") {
+            // waitingApi(div);
           }
         });
       }, 2000);
     }
-    function matchApi(div) {
-      $.post("/RockPaperScissor/api/match", {}, function (data, status) {
-        if (data) {
-          $(".loader").hide();
-          nextScreen(div);
-        }
-      });
-    }
+
+    // function waitingApi(div) {
+    //   var intervalId = setInterval(function () {
+    //     $.get("/RockPaperScissor/api/waiting", function (data, status) {
+    //       if (data && data === "Matched") {
+    //         clearInterval(intervalId);
+    //         matchApi(div);
+    //       }
+    //     });
+    //   }, 2000);
+    // }
+    // function matchApi(div) {
+    //   $.post("/RockPaperScissor/api/match", {}, function (data, status) {
+    //     if (data) {
+    //       $(".loader").hide();
+    //       nextScreen(div);
+    //     }
+    //   });
+    // }
 
     // Sets all the values on the board
     function setValues(playerChoice, competitorChoice, winnerText) {
