@@ -64,16 +64,14 @@ var gameModule = (function () {
 
     function requestMatch(div) {
       $(".loader").show();
-      var intervalId = setInterval(function () {
-        $.get("/RockPaperScissor/find", {}, function (data, status) {
-          if (data.roomId) {
-            roomId = data.roomId;
-            clearInterval(intervalId);
-            $(".loader").hide();
-            nextScreen(div);
-          }
-        });
-      }, 2000);
+
+      $.get("/RockPaperScissor/api/find", {}, function (data, status) {
+        if (data) {
+          console.log("BUGGGGGGG");
+          $(".loader").hide();
+          nextScreen(div);
+        }
+      });
     }
 
     // Sets all the values on the board
