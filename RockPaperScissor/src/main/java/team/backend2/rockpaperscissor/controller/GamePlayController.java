@@ -17,31 +17,31 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class GamePlayController {
-	@RequestMapping(value = "/test/turn", method = RequestMethod.POST)
-	public String test(@RequestParam(value = "uid") String uid, @RequestParam(value = "roomid") String roomid)
-	{
-		
-		return roomid + " " + uid;
-	}
-//  @RequestMapping(method = RequestMethod.POST)
+//	@RequestMapping(value = "/test/turn", method = RequestMethod.POST)
+//	public String test(@RequestParam(value = "uid") String uid, @RequestParam(value = "roomid") String roomid)
+//	{
+//
+//		return roomid + " " + uid;
+//	}
+////  @RequestMapping(method = RequestMethod.POST)
     @PostMapping("/turn")
         public String handle(HttpServletRequest request) {
-            //Cookie player = WebUtils.getCookie(request, "player");
-            //Cookie room_id = WebUtils.getCookie(request, "room_id");
-            String player = request.getParameter("uid");
-            String room_id = request.getParameter("room_id");
+            Cookie uid = WebUtils.getCookie(request, "playerId");
+            Cookie game_id = WebUtils.getCookie(request, "gameId");
+            //String player = request.getParameter("uid");
+            //String room_id = request.getParameter("room_id");
             Integer choose = Integer.parseInt(request.getParameter("choose"));
-            if (player == null)
+            if (uid == null)
                 return "signup";
 
             GamePool gamePool = GamePool.getInstance();
-            Game curGame = gamePool.findById(room_id.toString());
+            Game curGame = gamePool.findById(game_id.toString());
 
             if(curGame == null) return "You are not in any game";
 
-            curGame.update(player.toString(), choose);
+            curGame.update(uid.toString(), choose);
             if(curGame.isfinish())
-                if(curGame.getWinner().equals(player.toString()))
+                if(curGame.getWinner().equals(uid.toString()))
                     return "You Win";
                 else return "You Lose";
             return "Waiting";
