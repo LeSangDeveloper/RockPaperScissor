@@ -41,7 +41,7 @@ public class ApiController {
     	{
     		return "Play";
     	}
-    	else if (result == uid)
+    	else if (result.equals(uid))
     	{
     		return "Waiting";
     	}
