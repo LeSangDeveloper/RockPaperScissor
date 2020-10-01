@@ -17,9 +17,16 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class GamePlayController {
-//        @RequestMapping(method = RequestMethod.POST)
-        @RequestMapping(value ="/turn", method = RequestMethod.POST)
+	@RequestMapping(value = "/test/turn", method = RequestMethod.POST)
+	public String test(@RequestParam(value = "uid") String uid, @RequestParam(value = "roomid") String roomid)
+	{
+		
+		return roomid + " " + uid;
+	}
+//  @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("/turn")
         public String handle(HttpServletRequest request) {
+            //System.out.println("AAAAAAAAAAAAAAAAAAAAA");
             //Cookie player = WebUtils.getCookie(request, "player");
             //Cookie room_id = WebUtils.getCookie(request, "room_id");
             //String player = payload.get("uid").toString();
