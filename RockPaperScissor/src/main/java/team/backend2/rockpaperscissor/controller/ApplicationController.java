@@ -1,6 +1,7 @@
 package team.backend2.rockpaperscissor.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.lang.System;
 
 import javax.annotation.Nullable;
@@ -16,17 +17,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.WebUtils;
-
+import java.util.UUID;
 @Controller
 @RequestMapping("/")
 public class ApplicationController {
 	
-	ArrayList<String> Players;
-	
-    @RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
     public String hello(HttpServletRequest request,Model model) {
         
-        Cookie player = WebUtils.getCookie(request, "player");
+        Cookie player = WebUtils.getCookie(request, "playerId");
         
         if (player == null)
         	return "signup";
@@ -43,6 +42,8 @@ public class ApplicationController {
     @RequestMapping(value = "/signup"  ,method = RequestMethod.POST)
     public String PostSignUp(String name, HttpServletResponse response)
     {
+    	UUID id = UUID.randomUUID();
+    	response.addCookie(new Cookie("playerId", id.toString()));
     	response.addCookie(new Cookie("player", name));
     	return "index";
     }
