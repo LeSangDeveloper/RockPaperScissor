@@ -17,12 +17,15 @@ public class WaitingPool {
         return instance;
     }
     public String findRoom(String uid){
+        System.out.println(pool);
         if(pool.get(uid) != null){
+            System.out.println("exists");
             return "-"+uid;
         }
         for (String roomId : pool.keySet()) {
             // Nếu phòng chưa chơi và room đó của người khác
-            if (pool.get(roomId) == null && roomId != uid) {
+            if (pool.get(roomId) == null && !roomId.equals(uid)) {
+                System.out.println("find another room");
                 return roomId;
             }
         }
