@@ -16,7 +16,13 @@ import java.util.Map;
 @RestController
 //@RequestMapping("/turn")
 public class GamePlayController {
-//        @RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/test/turn", method = RequestMethod.POST)
+	public String test(@RequestParam(value = "uid") String uid, @RequestParam(value = "roomid") String roomid)
+	{
+		
+		return roomid + " " + uid;
+	}
+//  @RequestMapping(method = RequestMethod.POST)
     @PostMapping("/turn")
         public String handle(HttpServletRequest request, @RequestBody Map<String, Object> payload) {
             //System.out.println("AAAAAAAAAAAAAAAAAAAAA");
