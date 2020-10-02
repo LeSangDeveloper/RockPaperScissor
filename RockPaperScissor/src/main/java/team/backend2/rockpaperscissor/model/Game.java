@@ -53,9 +53,25 @@ public class Game {
         }
         return false;
     }
-    public void update(String uid, Integer choose){
-        if(roundOrder >= 2) return;
+    public String update(String uid, Integer choose){
         Round curRound = rounds.get(roundOrder);
+        if(roundOrder >= 2) {
+            Integer win = curRound.getWinner();
+            if(win == 1) {
+                if (uid.equals(uid_2))
+                    return "Round Win";
+                if (uid.equals(uid_1))
+                    return "Round Lose";
+            }else if( win == -1)
+            {
+                if (uid.equals(uid_1))
+                    return "Round Win";
+                if (uid.equals(uid_2))
+                    return "Round Lose";
+            }
+            return "Round Tie";
+        };
+
         if(uid.equals(uid_1) && curRound.getPick_1() == null) {
             curRound.setPick_1(choose);
         }
@@ -63,9 +79,25 @@ public class Game {
             curRound.setPick_2(choose);
         }
         if(curRound.isfinish()) {
-            roundOrder++;
-            balanceScore += curRound.getWinner();
+            if(roundOrder < 2) roundOrder++;
+            Integer win = curRound.getWinner();
+            balanceScore += win;
+            if(win == 1) {
+                if (uid.equals(uid_2))
+                    return "Round Win";
+                if (uid.equals(uid_1))
+                    return "Round Lose";
+            }else if( win == -1)
+            {
+                if (uid.equals(uid_1))
+                    return "Round Win";
+                if (uid.equals(uid_2))
+                    return "Round Lose";
+            }
+            return "Round Tie";
+
         }
+        return "Waiting";
     }
     @Column(name = "winner", nullable = true)
     public String getWinner() {

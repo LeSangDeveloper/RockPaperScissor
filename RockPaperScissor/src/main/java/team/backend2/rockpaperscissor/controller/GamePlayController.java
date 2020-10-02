@@ -29,11 +29,15 @@ public class GamePlayController {
             Game curGame = gamePool.findById(game_id);
             if(curGame == null) return "You are not in any game";
 
-            curGame.update(uid, choose);
-            if(curGame.isfinish()) {
-                if (curGame.getWinner().equals(uid))
-                    return "You Win";
-                else return "You Lose";
+            String result = curGame.update(uid, choose);
+            if(result == "round finish") {
+                if (curGame.isfinish()) {
+                    if (curGame.getWinner().equals(uid))
+                        return "You Win";
+                    else return "You Lose";
+                }
+
+                return "round finish";
             }
             return "Waiting";
         }
