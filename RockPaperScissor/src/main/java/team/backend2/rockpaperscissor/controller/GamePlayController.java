@@ -30,14 +30,14 @@ public class GamePlayController {
             if(curGame == null) return "You are not in any game";
 
             String result = curGame.update(uid, choose);
-            if(result == "round finish") {
+            if(!result.equals("Waiting")) {
                 if (curGame.isfinish()) {
                     if (curGame.getWinner().equals(uid))
                         return "You Win";
                     else return "You Lose";
                 }
 
-                return "round finish";
+                return result;
             }
             return "Waiting";
         }

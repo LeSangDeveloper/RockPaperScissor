@@ -45,6 +45,7 @@ public class ApplicationController {
     	UUID id = UUID.randomUUID();
     	response.addCookie(new Cookie("playerId", id.toString()));
     	response.addCookie(new Cookie("player", name));
+    	//response.addCookie(new Cookie("turn"),Integer.toString(20));
     	return "index";
     }
     
